@@ -6,7 +6,17 @@
   <title>Conditions générales, Joli Comptoir</title>
   <meta name="description" content="Conditions générales de vente et de licence du logiciel de caisse Joli Comptoir, édité par Oxygène Numérique (Oxynum), réservées aux professionnels.">
   <meta name="theme-color" content="#ffffff">
+  <!-- i18n:head -->
   <link rel="canonical" href="https://jolicomptoir.com/cgv.html">
+  <link rel="alternate" hreflang="fr" href="https://jolicomptoir.com/cgv.html">
+  <link rel="alternate" hreflang="en" href="https://jolicomptoir.com/en/cgv.html">
+  <link rel="alternate" hreflang="es" href="https://jolicomptoir.com/es/cgv.html">
+  <link rel="alternate" hreflang="de" href="https://jolicomptoir.com/de/cgv.html">
+  <link rel="alternate" hreflang="it" href="https://jolicomptoir.com/it/cgv.html">
+  <link rel="alternate" hreflang="pt" href="https://jolicomptoir.com/pt/cgv.html">
+  <link rel="alternate" hreflang="zh-Hans" href="https://jolicomptoir.com/zh/cgv.html">
+  <link rel="alternate" hreflang="x-default" href="https://jolicomptoir.com/cgv.html">
+  <!-- /i18n:head -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/familjen-grotesk.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/style.css">
@@ -15,11 +25,28 @@
   <a class="skip" href="#contenu">Aller au contenu</a>
 
   <header class="legal-header">
-    <a class="brand" href="index.html" aria-label="Joli Comptoir, accueil">
-      <svg class="brand-tag" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 4h13.2c.8 0 1.6.3 2.1.9l7.8 7.8c1.2 1.2 1.2 3.1 0 4.2L17 28c-1.2 1.2-3.1 1.2-4.2 0L5 20.2c-.6-.6-.9-1.3-.9-2.1V5c0-.6.4-1 .9-1z" fill="currentColor"/><circle cx="10.5" cy="10.5" r="2.4" fill="#fff"/></svg>
-      <span>Joli Comptoir</span>
-    </a>
-    <a href="index.html">Retour au site</a>
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/logo.svg" alt="Joli Comptoir" width="329" height="64"></a>
+    <div class="header-actions">
+      <!-- i18n:langues -->
+      <div class="langues" data-langues>
+        <button type="button" class="langue-btn" aria-expanded="false" aria-controls="langues-menu" aria-label="Langue : Français">
+          <img class="drapeau" src="assets/flags/fr.svg" alt="" width="24" height="24">
+          <span>FR</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <ul class="langues-menu" id="langues-menu" hidden>
+          <li><a href="cgv.html" hreflang="fr" lang="fr" aria-current="true"><img class="drapeau" src="assets/flags/fr.svg" alt="" width="22" height="22">Français</a></li>
+          <li><a href="en/cgv.html" hreflang="en" lang="en"><img class="drapeau" src="assets/flags/gb.svg" alt="" width="22" height="22">English</a></li>
+          <li><a href="es/cgv.html" hreflang="es" lang="es"><img class="drapeau" src="assets/flags/es.svg" alt="" width="22" height="22">Español</a></li>
+          <li><a href="de/cgv.html" hreflang="de" lang="de"><img class="drapeau" src="assets/flags/de.svg" alt="" width="22" height="22">Deutsch</a></li>
+          <li><a href="it/cgv.html" hreflang="it" lang="it"><img class="drapeau" src="assets/flags/it.svg" alt="" width="22" height="22">Italiano</a></li>
+          <li><a href="pt/cgv.html" hreflang="pt" lang="pt"><img class="drapeau" src="assets/flags/pt.svg" alt="" width="22" height="22">Português</a></li>
+          <li><a href="zh/cgv.html" hreflang="zh-Hans" lang="zh-Hans"><img class="drapeau" src="assets/flags/cn.svg" alt="" width="22" height="22">中文</a></li>
+        </ul>
+      </div>
+      <!-- /i18n:langues -->
+      <a href="index.html">Retour au site</a>
+    </div>
   </header>
 
   <main id="contenu" class="legal">
@@ -154,10 +181,7 @@
   </main>
 
   <footer class="site-footer">
-    <a class="brand brand-small" href="index.html">
-      <svg class="brand-tag" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 4h13.2c.8 0 1.6.3 2.1.9l7.8 7.8c1.2 1.2 1.2 3.1 0 4.2L17 28c-1.2 1.2-3.1 1.2-4.2 0L5 20.2c-.6-.6-.9-1.3-.9-2.1V5c0-.6.4-1 .9-1z" fill="currentColor"/><circle cx="10.5" cy="10.5" r="2.4" fill="#fff"/></svg>
-      <span>Joli Comptoir</span>
-    </a>
+    <a class="brand brand-small" href="index.html"><img class="brand-logo" src="assets/logo.svg" alt="Joli Comptoir" width="329" height="64"></a>
     <p>La caisse des boutiques qui préfèrent vendre, éditée par <a href="https://oxynum.fr">Oxygène Numérique</a>.</p>
     <nav class="footer-legal" aria-label="Informations légales">
       <a href="mentions-legales.html">Mentions légales</a>

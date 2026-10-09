@@ -11,7 +11,17 @@
   <meta property="og:url" content="https://jolicomptoir.com/">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#ffffff">
+  <!-- i18n:head -->
   <link rel="canonical" href="https://jolicomptoir.com/">
+  <link rel="alternate" hreflang="fr" href="https://jolicomptoir.com/">
+  <link rel="alternate" hreflang="en" href="https://jolicomptoir.com/en/">
+  <link rel="alternate" hreflang="es" href="https://jolicomptoir.com/es/">
+  <link rel="alternate" hreflang="de" href="https://jolicomptoir.com/de/">
+  <link rel="alternate" hreflang="it" href="https://jolicomptoir.com/it/">
+  <link rel="alternate" hreflang="pt" href="https://jolicomptoir.com/pt/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://jolicomptoir.com/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://jolicomptoir.com/">
+  <!-- /i18n:head -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/familjen-grotesk.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 861px)">
@@ -22,10 +32,7 @@
   <a class="skip" href="#contenu">Aller au contenu</a>
 
   <header class="site-header">
-    <a class="brand" href="#" aria-label="Joli Comptoir, accueil">
-      <svg class="brand-tag" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 4h13.2c.8 0 1.6.3 2.1.9l7.8 7.8c1.2 1.2 1.2 3.1 0 4.2L17 28c-1.2 1.2-3.1 1.2-4.2 0L5 20.2c-.6-.6-.9-1.3-.9-2.1V5c0-.6.4-1 .9-1z" fill="currentColor"/><circle cx="10.5" cy="10.5" r="2.4" fill="#fff"/></svg>
-      <span>Joli Comptoir</span>
-    </a>
+    <a class="brand" href="#"><img class="brand-logo" src="assets/logo.svg" alt="Joli Comptoir" width="329" height="64"></a>
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="#journee">Une journée</a>
       <a href="#demo">Démo</a>
@@ -33,7 +40,27 @@
       <a href="#outils">Ce qu'elle fait</a>
       <a href="#chez-vous">Vos données</a>
     </nav>
-    <a class="btn btn-ink btn-small" href="#contact">Parler à l'équipe</a>
+    <div class="header-actions">
+      <!-- i18n:langues -->
+      <div class="langues" data-langues>
+        <button type="button" class="langue-btn" aria-expanded="false" aria-controls="langues-menu" aria-label="Langue : Français">
+          <img class="drapeau" src="assets/flags/fr.svg" alt="" width="24" height="24">
+          <span>FR</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <ul class="langues-menu" id="langues-menu" hidden>
+          <li><a href="index.html" hreflang="fr" lang="fr" aria-current="true"><img class="drapeau" src="assets/flags/fr.svg" alt="" width="22" height="22">Français</a></li>
+          <li><a href="en/index.html" hreflang="en" lang="en"><img class="drapeau" src="assets/flags/gb.svg" alt="" width="22" height="22">English</a></li>
+          <li><a href="es/index.html" hreflang="es" lang="es"><img class="drapeau" src="assets/flags/es.svg" alt="" width="22" height="22">Español</a></li>
+          <li><a href="de/index.html" hreflang="de" lang="de"><img class="drapeau" src="assets/flags/de.svg" alt="" width="22" height="22">Deutsch</a></li>
+          <li><a href="it/index.html" hreflang="it" lang="it"><img class="drapeau" src="assets/flags/it.svg" alt="" width="22" height="22">Italiano</a></li>
+          <li><a href="pt/index.html" hreflang="pt" lang="pt"><img class="drapeau" src="assets/flags/pt.svg" alt="" width="22" height="22">Português</a></li>
+          <li><a href="zh/index.html" hreflang="zh-Hans" lang="zh-Hans"><img class="drapeau" src="assets/flags/cn.svg" alt="" width="22" height="22">中文</a></li>
+        </ul>
+      </div>
+      <!-- /i18n:langues -->
+      <a class="btn btn-ink btn-small" href="#contact">Parler à l'équipe</a>
+    </div>
   </header>
 
   <main id="contenu">
@@ -205,10 +232,10 @@
         <div class="caisse-catalogue">
           <div class="caisse-bar">
             <div class="caisse-tabs" role="group" aria-label="Filtrer par rayon">
-              <button type="button" class="chip" aria-pressed="true" data-filter="Tout">Tout</button>
-              <button type="button" class="chip" aria-pressed="false" data-filter="Hauts">Hauts</button>
-              <button type="button" class="chip" aria-pressed="false" data-filter="Bas">Bas</button>
-              <button type="button" class="chip" aria-pressed="false" data-filter="Accessoires">Accessoires</button>
+              <button type="button" class="chip" aria-pressed="true" data-filter="all">Tout</button>
+              <button type="button" class="chip" aria-pressed="false" data-filter="tops">Hauts</button>
+              <button type="button" class="chip" aria-pressed="false" data-filter="bottoms">Bas</button>
+              <button type="button" class="chip" aria-pressed="false" data-filter="accessories">Accessoires</button>
             </div>
             <button type="button" class="scan-btn" data-scan>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7V5h3M17 5h3v2M20 17v2h-3M7 19H4v-2"/><path d="M8 9v6M11 9v6M13.5 9v6M16 9v6"/></svg>
@@ -448,10 +475,7 @@
   </main>
 
   <footer class="site-footer">
-    <span class="brand brand-small">
-      <svg class="brand-tag" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 4h13.2c.8 0 1.6.3 2.1.9l7.8 7.8c1.2 1.2 1.2 3.1 0 4.2L17 28c-1.2 1.2-3.1 1.2-4.2 0L5 20.2c-.6-.6-.9-1.3-.9-2.1V5c0-.6.4-1 .9-1z" fill="currentColor"/><circle cx="10.5" cy="10.5" r="2.4" fill="#fff"/></svg>
-      <span>Joli Comptoir</span>
-    </span>
+    <a class="brand brand-small" href="index.html"><img class="brand-logo" src="assets/logo.svg" alt="Joli Comptoir" width="329" height="64"></a>
     <p>La caisse des boutiques qui préfèrent vendre, éditée par <a href="https://oxynum.fr">Oxygène Numérique</a>.</p>
     <nav class="footer-legal" aria-label="Informations légales">
       <a href="mentions-legales.html">Mentions légales</a>

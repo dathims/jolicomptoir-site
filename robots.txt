@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jolicomptoir.com/sitemap.xml

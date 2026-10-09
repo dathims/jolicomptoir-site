@@ -1,0 +1,10 @@
+{
+  "name": "jolicomptoir-site",
+  "private": true,
+  "description": "Site vitrine de Joli Comptoir, en 7 langues",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/i18n.mjs",
+    "logo": "python3 scripts/build-logo.py assets"
+  }
+}

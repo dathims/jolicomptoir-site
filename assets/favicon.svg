@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><g transform="rotate(-8 16 16)"><path d="M5 4h13.2c.8 0 1.6.3 2.1.9l7.8 7.8c1.2 1.2 1.2 3.1 0 4.2L17 28c-1.2 1.2-3.1 1.2-4.2 0L5 20.2c-.6-.6-.9-1.3-.9-2.1V5c0-.6.4-1 .9-1z" fill="#2a36b8"/><circle cx="10.5" cy="10.5" r="2.4" fill="#fff"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Joli Comptoir"><title>Joli Comptoir</title><g transform="translate(1.00 1.00) scale(1.0000) rotate(-14 32 32)">
+  <path d="M18.6 32 C 14 26.5, 9.5 22.5, 6.8 15.5" fill="none" stroke="#2a36b8" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M22 15 H50 Q56 15 56 21 V43 Q56 49 50 49 H22 Q20.4 49 19.2 47.9 L8.6 35.6 Q6.8 32 8.6 28.4 L19.2 16.1 Q20.4 15 22 15 Z" fill="#2a36b8"/>
+  <path d="M23.4 19.6 H49 Q51.6 19.6 51.6 22.2 V41.8 Q51.6 44.4 49 44.4 H23.4 L13.9 33.6 Q12.9 32 13.9 30.4 Z" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="2.6 2.4" stroke-linecap="round" opacity=".9"/>
+  <circle cx="18.6" cy="32" r="3.4" fill="#ffffff"/>
+</g></svg>

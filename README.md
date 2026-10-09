@@ -16,8 +16,26 @@ vous freinera plus » : la file d'attente, les étiquettes écrites à la main, 
   caisse jouable (panier, chronomètre, ticket avec empreinte SHA-256).
 - `assets/img/` : visuels générés par IA pour ce site.
 - `assets/fonts/` : polices hébergées localement.
+- `assets/logo*.svg`, `assets/favicon.svg`, `assets/app-icon.svg` : logo vectorisé (étiquette cousue et nom en Familjen Grotesk), généré par `scripts/build-logo.py`.
+- `assets/flags/` : drapeaux du sélecteur de langue.
 
-Aucune étape de build : ce sont des fichiers statiques.
+Les pages sont statiques. Une seule étape assemble les langues :
+
+```bash
+npm run build   # sélecteur de langue, hreflang, chemins assets/ et sitemap.xml
+npm run logo    # régénère les fichiers du logo depuis la police du site
+```
+
+## Langues
+
+Français à la racine, puis `en/`, `es/`, `de/`, `it/`, `pt/` et `zh/`, avec les
+mêmes noms de fichiers. Chaque page traduite garde les marqueurs
+`<!-- i18n:head -->` et `<!-- i18n:langues -->` (remplis par `npm run build`)
+et l'accueil porte un bloc `<script type="application/json" id="i18n">` pour
+les textes de la démo et du comptoir animé (clés : objet `FR` d'`assets/app.js`).
+Une modification du français doit être reportée dans les six traductions, puis
+`npm run build`. Les pages légales traduites rappellent que seule la version
+française fait foi.
 
 ## Lancer en local
 

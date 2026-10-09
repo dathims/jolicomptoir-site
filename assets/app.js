@@ -5,8 +5,87 @@
   'use strict';
 
   // ---------------------------------------------------------------------------
+  // Textes : le français sert de base, chaque page traduite fournit les siens
+  // dans <script type="application/json" id="i18n">.
+  // ---------------------------------------------------------------------------
+
+  const FR = {
+    locale: 'fr-FR',
+    decimal: ',',
+    group: ' ',
+    currency: '{amount} €',
+    steps: [
+      "Un bip : la douchette lit l'étiquette, le pull s'ajoute à la vente.",
+      'Deuxième bip : le jean rejoint la vente et le total se met à jour.',
+      "Paiement en espèces : le ticket s'imprime et le tiroir s'ouvre.",
+      'Vente suivante, réglée par carte sur le terminal de votre banque.',
+      "Le ticket s'imprime et le tiroir reste fermé.",
+      "Arrivage : l'imprimante d'étiquettes sort le prix et le code-barres.",
+    ],
+    pause: 'Pause',
+    play: 'Lecture',
+    pauseLabel: "Mettre l'animation en pause",
+    playLabel: "Lancer l'animation",
+    products: [
+      'Pull col rond mérinos', 'Chemise en lin', 'Robe portefeuille', 'Jean droit brut',
+      'Pantalon large en laine', 'Écharpe en laine', 'Chaussettes côtelées', 'Tote bag en toile',
+    ],
+    addAria: 'Ajouter {name}, {price} euros',
+    removeOne: 'Retirer un {name}',
+    addOne: 'Ajouter un {name}',
+    receipt: {
+      shop: 'BOUTIQUE DÉMO',
+      demo: 'Démonstration Joli Comptoir',
+      total: 'TOTAL TTC',
+      vat: 'dont TVA 20 %',
+      net: 'Total HT',
+      card: 'Carte bancaire',
+      cashIn: 'Espèces reçues',
+      change: 'Rendu',
+      ticket: 'Ticket',
+      print: 'Empreinte',
+      thanks: 'Merci de votre visite !',
+    },
+    result: 'Encaissé en {s} s. Le client repart, le stock est à jour.',
+  };
+
+  const T = (() => {
+    try {
+      const own = JSON.parse(document.getElementById('i18n')?.textContent || '{}');
+      return { ...FR, ...own, receipt: { ...FR.receipt, ...own.receipt } };
+    } catch {
+      return FR;
+    }
+  })();
+  const fill = (template, values) => template.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? '');
+
+  // ---------------------------------------------------------------------------
   // Une journée en boutique : onglets accessibles (flèches, Début, Fin)
   // ---------------------------------------------------------------------------
+
+  // Sélecteur de langue : menu déroulant, fermé par Échap ou un clic ailleurs
+  const langues = document.querySelector('[data-langues]');
+  if (langues) {
+    const btn = langues.querySelector('.langue-btn');
+    const menu = langues.querySelector('.langues-menu');
+    const setOpen = (open) => {
+      btn.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      if (open) menu.querySelector('[aria-current="true"]')?.focus();
+    };
+    btn.addEventListener('click', () => setOpen(menu.hidden));
+    document.addEventListener('click', (e) => { if (!langues.contains(e.target)) setOpen(false); });
+    langues.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) { setOpen(false); btn.focus(); }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        const links = [...menu.querySelectorAll('a')];
+        if (menu.hidden || !links.length) return;
+        e.preventDefault();
+        const i = links.indexOf(document.activeElement);
+        links[(i + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus();
+      }
+    });
+  }
 
   const tabs = [...document.querySelectorAll('.horloge [role="tab"]')];
 
@@ -117,17 +196,17 @@
     // Le tiroir ne s'ouvre que pour les espèces, comme dans la vraie caisse.
     const STEPS = [
       { dev: 'scanner', state: ['l1', 'c-scan'], fx: ['beam', 'ring'], dur: 2600,
-        cap: "Un bip : la douchette lit l'étiquette, le pull s'ajoute à la vente." },
+        cap: T.steps[0] },
       { dev: 'scanner', state: ['l1', 'l2', 'c-scan'], fx: ['beam', 'ring'], dur: 2600,
-        cap: 'Deuxième bip : le jean rejoint la vente et le total se met à jour.' },
+        cap: T.steps[1] },
       { dev: 'drawer', state: ['l1', 'l2', 'paid-cash', 'receipt', 'drawer', 'c-print', 'c-drawer'], fx: [], dur: 3600,
-        cap: "Paiement en espèces : le ticket s'imprime et le tiroir s'ouvre." },
+        cap: T.steps[2] },
       { dev: 'tpe', state: ['l3', 'card'], fx: [], dur: 2600,
-        cap: 'Vente suivante, réglée par carte sur le terminal de votre banque.' },
+        cap: T.steps[3] },
       { dev: 'printer', state: ['l3', 'paid-card', 'tpe-ok', 'receipt', 'c-print'], fx: [], dur: 3200,
-        cap: "Le ticket s'imprime et le tiroir reste fermé." },
+        cap: T.steps[4] },
       { dev: 'labels', state: ['label', 'c-label'], fx: [], dur: 3600,
-        cap: "Arrivage : l'imprimante d'étiquettes sort le prix et le code-barres." },
+        cap: T.steps[5] },
     ];
     // Les appareils sans étape propre (l'écran) renvoient à l'étape la plus parlante.
     const FIRST_STEP = { screen: 1, scanner: 0, drawer: 2, tpe: 3, printer: 4, labels: 5 };
@@ -172,8 +251,8 @@
 
     function setPlaying(on) {
       playing = on;
-      toggle.textContent = on ? 'Pause' : 'Lecture';
-      toggle.setAttribute('aria-label', on ? "Mettre l'animation en pause" : "Lancer l'animation");
+      toggle.textContent = on ? T.pause : T.play;
+      toggle.setAttribute('aria-label', on ? T.pauseLabel : T.playLabel);
       if (on) run();
       else clearTimeout(timer);
     }
@@ -224,15 +303,15 @@
   if (!root) return;
 
   const PRODUCTS = [
-    { id: 1, name: 'Pull col rond mérinos', cat: 'Hauts', price: 8900, color: '#e6dccb' },
-    { id: 2, name: 'Chemise en lin', cat: 'Hauts', price: 7900, color: '#bfc6ad' },
-    { id: 3, name: 'Robe portefeuille', cat: 'Hauts', price: 12900, color: '#b3573c' },
-    { id: 4, name: 'Jean droit brut', cat: 'Bas', price: 11900, color: '#2f3b5e' },
-    { id: 5, name: 'Pantalon large en laine', cat: 'Bas', price: 13500, color: '#8a7a69' },
-    { id: 6, name: 'Écharpe en laine', cat: 'Accessoires', price: 4500, color: '#7c8d68' },
-    { id: 7, name: 'Chaussettes côtelées', cat: 'Accessoires', price: 1500, color: '#d6a28c' },
-    { id: 8, name: 'Tote bag en toile', cat: 'Accessoires', price: 2500, color: '#e4d8bf' },
-  ];
+    { id: 1, cat: 'tops', price: 8900, color: '#e6dccb' },
+    { id: 2, cat: 'tops', price: 7900, color: '#bfc6ad' },
+    { id: 3, cat: 'tops', price: 12900, color: '#b3573c' },
+    { id: 4, cat: 'bottoms', price: 11900, color: '#2f3b5e' },
+    { id: 5, cat: 'bottoms', price: 13500, color: '#8a7a69' },
+    { id: 6, cat: 'accessories', price: 4500, color: '#7c8d68' },
+    { id: 7, cat: 'accessories', price: 1500, color: '#d6a28c' },
+    { id: 8, cat: 'accessories', price: 2500, color: '#e4d8bf' },
+  ].map((p, i) => ({ ...p, name: T.products[i] ?? FR.products[i] }));
 
   const VAT_BP = 2000; // TVA 20 %, en points de base comme dans la caisse
   const WIDTH = 32;    // colonnes d'un ticket 58 mm
@@ -248,17 +327,17 @@
   const receiptEl = $('[data-receipt]');
   const resultEl = $('[data-result]');
 
-  const state = { lines: new Map(), startedAt: null, timer: null, ticketNo: 348, filter: 'Tout' };
+  const state = { lines: new Map(), startedAt: null, timer: null, ticketNo: 348, filter: 'all' };
 
-  // 1234567 centimes -> "12 345,67"
+  // 1234567 centimes -> "12 345,67" (séparateurs selon la langue)
   function money(cents) {
     const sign = cents < 0 ? '-' : '';
     const abs = Math.abs(cents);
-    const euros = String(Math.floor(abs / 100)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return `${sign}${euros},${String(abs % 100).padStart(2, '0')}`;
+    const euros = String(Math.floor(abs / 100)).replace(/\B(?=(\d{3})+(?!\d))/g, T.group);
+    return `${sign}${euros}${T.decimal}${String(abs % 100).padStart(2, '0')}`;
   }
 
-  const seconds = (ms) => (ms / 1000).toFixed(1).replace('.', ',');
+  const seconds = (ms) => (ms / 1000).toFixed(1).replace('.', T.decimal);
   const total = () => [...state.lines.values()].reduce((s, l) => s + l.product.price * l.qty, 0);
 
   // ----- Bip de douchette (Web Audio, créé au premier geste) -----
@@ -283,15 +362,16 @@
   // ----- Catalogue -----
   function renderGrid() {
     grid.innerHTML = '';
-    PRODUCTS.filter((p) => state.filter === 'Tout' || p.cat === state.filter).forEach((p) => {
+    PRODUCTS.filter((p) => state.filter === 'all' || p.cat === state.filter).forEach((p) => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'produit';
       b.dataset.id = p.id;
-      b.setAttribute('aria-label', `Ajouter ${p.name}, ${money(p.price)} euros`);
+      b.setAttribute('aria-label', fill(T.addAria, { name: p.name, price: money(p.price) }));
       b.innerHTML = `<span class="produit-swatch" style="--c:${p.color}"></span>
-        <span class="produit-nom">${p.name}</span>
-        <span class="produit-prix">${money(p.price)} €</span>`;
+        <span class="produit-nom"></span>
+        <span class="produit-prix">${fill(T.currency, { amount: money(p.price) })}</span>`;
+      b.querySelector('.produit-nom').textContent = p.name;
       b.addEventListener('click', () => add(p));
       grid.append(b);
     });
@@ -332,21 +412,24 @@
     cartEl.innerHTML = '';
     for (const { product, qty } of state.lines.values()) {
       const li = document.createElement('li');
-      li.innerHTML = `<span class="panier-nom">${product.name}</span>
+      li.innerHTML = `<span class="panier-nom"></span>
         <span class="panier-qte">
-          <button type="button" aria-label="Retirer un ${product.name}"><svg viewBox="0 0 16 16"><path d="M3.5 8h9"/></svg></button>
+          <button type="button"><svg viewBox="0 0 16 16"><path d="M3.5 8h9"/></svg></button>
           <span>${qty}</span>
-          <button type="button" aria-label="Ajouter un ${product.name}"><svg viewBox="0 0 16 16"><path d="M3.5 8h9M8 3.5v9"/></svg></button>
+          <button type="button"><svg viewBox="0 0 16 16"><path d="M3.5 8h9M8 3.5v9"/></svg></button>
         </span>
         <span class="panier-ligne">${money(product.price * qty)}</span>`;
+      li.querySelector('.panier-nom').textContent = product.name;
       const [minus, plus] = li.querySelectorAll('button');
+      minus.setAttribute('aria-label', fill(T.removeOne, { name: product.name }));
+      plus.setAttribute('aria-label', fill(T.addOne, { name: product.name }));
       minus.addEventListener('click', () => add(product, -1));
       plus.addEventListener('click', () => add(product, 1));
       cartEl.append(li);
     }
     const empty = state.lines.size === 0;
     emptyEl.hidden = !empty;
-    totalEl.textContent = `${money(total())} €`;
+    totalEl.textContent = fill(T.currency, { amount: money(total()) });
     payBtns.forEach((b) => { b.disabled = empty; });
   }
 
@@ -365,7 +448,7 @@
     chronoEl.classList.remove('is-running');
     if (reset) {
       state.startedAt = null;
-      chronoEl.textContent = '0,0 s';
+      chronoEl.textContent = `0${T.decimal}0 s`;
     }
   }
 
@@ -390,36 +473,40 @@
     const ttc = total();
     const vat = Math.round((ttc * VAT_BP) / (10000 + VAT_BP));
     const now = new Date();
-    const date = now.toLocaleDateString('fr-FR');
-    const time = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    const date = now.toLocaleDateString(T.locale);
+    const time = now.toLocaleTimeString(T.locale, { hour: '2-digit', minute: '2-digit' });
+    const R = T.receipt;
     const no = String(state.ticketNo++).padStart(6, '0');
 
-    const out = [center('BOUTIQUE DÉMO'), center('Démonstration Joli Comptoir'), rule];
+    const out = [center(R.shop), center(R.demo), rule];
     for (const { product, qty } of state.lines.values()) {
       out.push(product.name);
       out.push(row(`  ${qty} x ${money(product.price)}`, money(product.price * qty)));
     }
-    out.push(rule, row('TOTAL TTC', `${money(ttc)} EUR`), row('dont TVA 20 %', money(vat)), row('Total HT', money(ttc - vat)), '');
+    out.push(rule, row(R.total, `${money(ttc)} EUR`), row(R.vat, money(vat)), row(R.net, money(ttc - vat)), '');
 
     if (method === 'carte') {
-      out.push(row('Carte bancaire', money(ttc)));
+      out.push(row(R.card, money(ttc)));
     } else {
       // Le client tend le billet rond au-dessus (ou l'appoint s'il tombe juste).
       const given = Math.ceil(ttc / 1000) * 1000;
-      out.push(row('Espèces reçues', money(given)), row('Rendu', money(given - ttc)));
+      out.push(row(R.cashIn, money(given)), row(R.change, money(given - ttc)));
     }
 
-    out.push(rule, row(`Ticket ${no}`, `${date} ${time}`));
+    out.push(rule, row(`${R.ticket} ${no}`, `${date} ${time}`));
     const sig = await fingerprint(out.join('\n'));
-    if (sig) out.push(`Empreinte ${sig}`);
-    out.push('', center('Merci de votre visite !'));
+    if (sig) out.push(`${R.print} ${sig}`);
+    out.push('', center(R.thanks));
 
     receiptEl.textContent = out.join('\n');
     printer.hidden = false;
     receiptEl.classList.remove('is-printing');
     void receiptEl.offsetWidth; // relance l'animation d'impression
     receiptEl.classList.add('is-printing');
-    resultEl.innerHTML = `Encaissé en <em>${seconds(elapsed)} s</em>. Le client repart, le stock est à jour.`;
+    const [before, after = ''] = T.result.split('{s}');
+    const em = document.createElement('em');
+    em.textContent = seconds(elapsed);
+    resultEl.replaceChildren(before, em, after);
     payBtns.forEach((b) => { b.disabled = true; });
     $('[data-reset]').focus({ preventScroll: true });
   }

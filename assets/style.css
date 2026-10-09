@@ -100,9 +100,44 @@ button { font: inherit; color: inherit; }
   display: inline-flex; align-items: center; gap: .55rem;
   font-weight: 700; font-size: 1.375rem; letter-spacing: -.02em; text-decoration: none;
 }
-.brand-tag { width: 26px; height: 26px; transform: rotate(-8deg); color: var(--ink); }
-.brand-small { font-size: 1.125rem; }
-.brand-small .brand-tag { width: 22px; height: 22px; }
+.brand-logo { display: block; height: 36px; width: auto; }
+.brand-small .brand-logo { height: 26px; }
+
+/* Sélecteur de langue : drapeaux dans un cercle */
+.header-actions { display: flex; align-items: center; gap: .8rem; }
+.langues { position: relative; }
+.langue-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  min-height: 42px; padding: 0 .7rem 0 .45rem; border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, .12); background: rgba(255, 255, 255, .78);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  font-weight: 600; font-size: .875rem; cursor: pointer;
+}
+.langue-btn:hover { background: var(--white); border-color: var(--ink); }
+.langue-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.langue-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.drapeau {
+  width: 24px; height: 24px; border-radius: 50%; object-fit: cover; flex: none;
+  box-shadow: 0 0 0 1.5px var(--white), 0 0 0 2.5px rgba(0, 0, 0, .14);
+}
+.langues-menu {
+  position: absolute; right: 0; top: calc(100% + .5rem); z-index: 20;
+  min-width: 200px; margin: 0; padding: .4rem; list-style: none;
+  background: var(--white); border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 20px 44px -16px rgba(20, 24, 40, .35);
+}
+.langues-menu[hidden] { display: none; }
+.langues-menu a {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .6rem .7rem; border-radius: 12px; text-decoration: none; font-weight: 500;
+}
+.langues-menu a .drapeau { width: 22px; height: 22px; }
+.langues-menu a:hover { background: var(--brume); }
+.langues-menu a[aria-current="true"] { background: var(--atelier-soft); color: var(--atelier); font-weight: 600; }
+
+/* Chinois : polices du système pour les idéogrammes */
+:lang(zh) body, :lang(zh) .scene .ui { font-family: "Familjen Grotesk", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+:lang(zh) h1, :lang(zh) h2, :lang(zh) h3 { letter-spacing: 0; }
 
 .site-nav {
   display: flex; gap: 2rem;
@@ -658,6 +693,7 @@ section:not(.hero) { padding: clamp(4.5rem, 10vw, 8.5rem) var(--gutter); }
 
 @media (max-width: 520px) {
   .site-header .btn-small { display: none; }
+  .brand-logo { height: 30px; }
   .hero-actions .btn { width: 100%; }
   .panier-pay { grid-template-columns: 1fr; }
   .mock-label { width: 220px; }
@@ -670,4 +706,10 @@ section:not(.hero) { padding: clamp(4.5rem, 10vw, 8.5rem) var(--gutter); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+}
+
+/* Pages légales traduites : rappel que le français fait foi */
+.legal-note {
+  margin-top: 1.4rem; padding: .9rem 1.1rem; border-radius: 14px;
+  background: var(--atelier-soft); color: var(--atelier); font-weight: 500;
 }
