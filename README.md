@@ -28,9 +28,13 @@ python3 -m http.server 8080
 
 ## Déploiement
 
-Publié avec GitHub Pages depuis la branche `main` (dossier racine). Pour un
-domaine personnalisé, ajouter un fichier `CNAME` contenant par exemple
-`jolicomptoir.fr`, puis configurer le DNS.
+Publié sur https://jolicomptoir.com avec GitHub Pages, depuis la branche
+`main` (dossier racine). Le fichier `CNAME` porte le domaine.
+
+DNS chez Namecheap : quatre enregistrements A et quatre AAAA de GitHub Pages
+sur `@`, un CNAME `www` vers `dathims.github.io`, et le TXT
+`_github-pages-challenge-dathims` qui prouve que le domaine appartient au
+compte GitHub. La redirection d'e-mails Namecheap (MX et SPF) est conservée.
 
 ## Pages légales
 
