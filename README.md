@@ -15,6 +15,7 @@ vous freinera plus » : la file d'attente, les étiquettes écrites à la main, 
 - `assets/app.js` : onglets de la journée, codes-barres EAN-13 générés, démo de
   caisse jouable (panier, chronomètre, ticket avec empreinte SHA-256).
 - `assets/img/` : visuels générés par IA pour ce site.
+- `assets/fonts/` : polices hébergées localement.
 
 Aucune étape de build : ce sont des fichiers statiques.
 
@@ -31,6 +32,16 @@ Publié avec GitHub Pages depuis la branche `main` (dossier racine). Pour un
 domaine personnalisé, ajouter un fichier `CNAME` contenant par exemple
 `jolicomptoir.fr`, puis configurer le DNS.
 
+## Pages légales
+
+`mentions-legales.html`, `confidentialite.html` et `cgv.html` (conditions
+générales de vente et de licence du logiciel). Éditeur : OXYGENE NUMERIQUE
+(Oxynum). Le site ne dépose aucun cookie et n'appelle aucun service tiers : les
+polices sont servies depuis `assets/fonts/`.
+
 ## Licence
 
-Code sous licence MIT (voir `LICENSE`).
+Le code du site (HTML, CSS, JavaScript) est sous licence MIT (voir `LICENSE`).
+Le nom Joli Comptoir, son logo, les textes et les visuels restent la propriété
+d'OXYGENE NUMERIQUE et ne sont pas couverts par cette licence. Polices :
+Familjen Grotesk et IBM Plex Mono, sous licence SIL Open Font License 1.1.
