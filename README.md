@@ -18,6 +18,8 @@ vous freinera plus » : la file d'attente, les étiquettes écrites à la main, 
 - `assets/fonts/` : polices hébergées localement.
 - `assets/logo*.svg`, `assets/favicon.svg`, `assets/app-icon.svg` : logo vectorisé (étiquette cousue et nom en Familjen Grotesk), généré par `scripts/build-logo.py`.
 - `assets/flags/` : drapeaux du sélecteur de langue.
+- `assets/img/logos/` : logos de marques tierces affichés dans la section « connexions ». Ils appartiennent à leurs détenteurs et sont exclus de la licence du site.
+- `assets/img/gestes/` : les six scènes de comptoir, générées par IA.
 
 Les pages sont statiques. Une seule étape assemble les langues :
 
@@ -70,3 +72,8 @@ Le code du site (HTML, CSS, JavaScript) est sous licence MIT (voir `LICENSE`).
 Le nom Joli Comptoir, son logo, les textes et les visuels restent la propriété
 d'OXYGENE NUMERIQUE et ne sont pas couverts par cette licence. Polices :
 Familjen Grotesk et IBM Plex Mono, sous licence SIL Open Font License 1.1.
+
+Les logos de `assets/img/logos/` sont des marques de sociétés tierces, citées
+pour indiquer une compatibilité ou un connecteur réalisable. Ils restent la
+propriété de leurs détenteurs, hors de cette licence, et sont retirés sur
+simple demande de la marque.
