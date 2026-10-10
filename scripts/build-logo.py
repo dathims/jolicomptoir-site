@@ -1,4 +1,4 @@
-"""Génère le logo Joli Comptoir : emblème (étiquette cousue) + nom vectorisé."""
+"""Génère le logo Joli Comptoir : sac de boutique au cœur découpé, ourlet cousu, nom vectorisé."""
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
 from fontTools.pens.svgPathPen import SVGPathPen
@@ -6,10 +6,10 @@ from fontTools.pens.transformPen import TransformPen
 import sys
 
 FONT = __import__('pathlib').Path(__file__).resolve().parent.parent / 'assets/fonts/familjen-grotesk.woff2'
-INK, ATELIER, WHITE = '#000000', '#2a36b8', '#ffffff'
+INK, ATELIER, WHITE = '#15171a', '#2a36b8', '#ffffff'
 
 font = TTFont(FONT)
-inst = instantiateVariableFont(font, {'wght': 640})
+inst = instantiateVariableFont(font, {'wght': 700})
 gs = inst.getGlyphSet()
 cmap = inst.getBestCmap()
 upem = inst['head'].unitsPerEm
@@ -64,50 +64,77 @@ def text_paths(text, size, x0, baseline, tracking=-0.012):
         x += adv + k + tracking * size
     return out, x - x0, dotless
 
-def emblem(cx, cy, s, color=ATELIER, stitch=WHITE, string=INK, rot=-14):
-    """Étiquette cousue, centrée en (cx, cy), taille s (côté de la boîte 64)."""
-    k = s / 64
-    tag = ('M22 15 H50 Q56 15 56 21 V43 Q56 49 50 49 H22 Q20.4 49 19.2 47.9 '
-           'L8.6 35.6 Q6.8 32 8.6 28.4 L19.2 16.1 Q20.4 15 22 15 Z')
-    stitchp = ('M23.4 19.6 H49 Q51.6 19.6 51.6 22.2 V41.8 Q51.6 44.4 49 44.4 H23.4 '
-               'L13.9 33.6 Q12.9 32 13.9 30.4 Z')
-    return f'''<g transform="translate({cx - 32*k:.2f} {cy - 32*k:.2f}) scale({k:.4f}) rotate({rot} 32 32)">
-  <path d="M18.6 32 C 14 26.5, 9.5 22.5, 6.8 15.5" fill="none" stroke="{string}" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="{tag}" fill="{color}"/>
-  <path d="{stitchp}" fill="none" stroke="{stitch}" stroke-width="1.5" stroke-dasharray="2.6 2.4" stroke-linecap="round" opacity=".9"/>
-  <circle cx="18.6" cy="32" r="3.4" fill="{stitch}"/>
-</g>'''
+# Cœur unitaire : pointe en bas, centré sur (0, 0), environ 2 x 1,8
+HEART = ('M0 0.78 C-1.25 -0.05 -1.15 -1 -0.52 -1 C-0.18 -1 0 -0.78 0 -0.6 '
+         'C0 -0.78 0.18 -1 0.52 -1 C1.15 -1 1.25 -0.05 0 0.78 Z')
+
+# Sac de boutique dans une boîte de 64 : corps trapézoïdal aux angles adoucis
+BAG = ('M17.5 22 H46.5 Q49.6 22 50.1 25.1 L54.6 53.6 Q55.3 58 50.9 58 H13.1 '
+       'Q8.7 58 9.4 53.6 L13.9 25.1 Q14.4 22 17.5 22 Z')
+
+
+def emblem(color=ATELIER, uid='jc'):
+    """Le sac : anse, œillets, ourlet cousu et cœur découpés dans le flanc gauche."""
+    return f'''<defs><mask id="{uid}-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+  <rect width="64" height="64" fill="#fff"/>
+  <path d="{HEART}" transform="translate(18.5 47.2) rotate(-20) scale(11.2)" fill="#000"/>
+  <circle cx="24" cy="31.2" r="2.2" fill="#000"/><circle cx="40" cy="31.2" r="2.2" fill="#000"/>
+  <path d="M18 25.8 H46" stroke="#000" stroke-width="1.5" stroke-dasharray="2.4 2.2" stroke-linecap="round"/>
+</mask></defs>
+<path d="M24.5 23 V16.5 a7.5 7.5 0 0 1 15 0 V23" fill="none" stroke="{color}" stroke-width="4.4" stroke-linecap="round"/>
+<path d="{BAG}" fill="{color}" mask="url(#{uid}-cut)"/>'''
+
 
 def idot(x, y, r, color=ATELIER):
-    # point du i : un petit losange arrondi, comme une étiquette vue de face
-    return f'<rect x="{x - r:.2f}" y="{y - r:.2f}" width="{2*r:.2f}" height="{2*r:.2f}" rx="{r*0.45:.2f}" transform="rotate(45 {x:.2f} {y:.2f})" fill="{color}"/>'
+    # point du i : un petit cœur, comme celui du sac
+    return f'<path d="{HEART}" transform="translate({x:.2f} {y:.2f}) scale({r:.2f})" fill="{color}"/>'
+
 
 def svg(w, h, body, title='Joli Comptoir'):
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w:.0f} {h:.0f}" role="img" aria-label="{title}"><title>{title}</title>{body}</svg>\n'
 
-def lockup(ink=INK, accent=ATELIER, stitch=WHITE, string=None):
-    string = string or ink
-    size = 46
-    baseline = 47
-    paths, width, dots = text_paths('Jolı Comptoir', size, 74, baseline)
-    body = emblem(32, 32, 62, accent, stitch, string)
-    body += f'<path d="{" ".join(paths)}" fill="{ink}"/>'
+
+def wordmark(size, x0, baseline, ink, accent):
+    paths, width, dots = text_paths('Jolı Comptoir', size, x0, baseline)
+    body = f'<path d="{" ".join(paths)}" fill="{ink}"/>'
     xh = inst['OS/2'].sxHeight * size / upem
     for dx in dots:
-        body += idot(dx, baseline - xh - 5.6, 3.5, accent)
-    return svg(74 + width + 4, 64, body)
+        body += idot(dx, baseline - xh - size * 0.16, size * 0.095, accent)
+    return body, width
 
-def mark(accent=ATELIER, stitch=WHITE, string=INK, bg=None):
+
+def lockup(ink=INK, accent=ATELIER):
+    """Version horizontale : sac à gauche, nom à droite (en-tête du site)."""
+    words, width = wordmark(44, 70, 47, ink, accent)
+    return svg(70 + width + 4, 64, f'<g transform="translate(-2 0)">{emblem(accent)}</g>' + words)
+
+
+def stacked(ink=INK, accent=ATELIER):
+    """Version empilée : sac au-dessus du nom, centrés (couverture, signature)."""
+    size = 52
+    words, width = wordmark(size, 0, 0, ink, accent)
+    w = width + 8
+    scale = 2.1
+    bag = f'<g transform="translate({w / 2 - 32 * scale:.2f} 0) scale({scale})">{emblem(accent)}</g>'
+    txt = f'<g transform="translate(4 {64 * scale + 46})">{words}</g>'
+    return svg(w, 64 * scale + 58, bag + txt)
+
+
+def mark(accent=ATELIER, bg=None):
     body = ''
     if bg:
-        body += f'<rect width="64" height="64" rx="14" fill="{bg}"/>'
-    body += emblem(33, 33, 58 if bg else 64, accent, stitch, string)
+        body += f'<rect width="64" height="64" rx="14" fill="{bg}"/><g transform="translate(5.5 2) scale(.83)">{emblem(accent)}</g>'
+    else:
+        body += emblem(accent)
     return svg(64, 64, body)
+
 
 out = sys.argv[1]
 open(f'{out}/logo.svg', 'w').write(lockup())
-open(f'{out}/logo-blanc.svg', 'w').write(lockup(ink=WHITE, accent=WHITE, stitch=ATELIER))
+open(f'{out}/logo-blanc.svg', 'w').write(lockup(ink=WHITE, accent=WHITE))
+open(f'{out}/logo-empile.svg', 'w').write(stacked())
+open(f'{out}/logo-empile-blanc.svg', 'w').write(stacked(ink=WHITE, accent=WHITE))
 open(f'{out}/logo-embleme.svg', 'w').write(mark())
-open(f'{out}/favicon.svg', 'w').write(mark(string=ATELIER))
-open(f'{out}/app-icon.svg', 'w').write(mark(accent=WHITE, stitch=ATELIER, string=WHITE, bg=ATELIER))
+open(f'{out}/favicon.svg', 'w').write(mark())
+open(f'{out}/app-icon.svg', 'w').write(mark(accent=WHITE, bg=ATELIER))
 print('ok', len(KERN), 'paires de crénage')
