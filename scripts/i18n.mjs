@@ -9,6 +9,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://jolicomptoir.com';
@@ -64,6 +65,12 @@ const between = (html, tag, block) => {
   return html.replace(re, block);
 };
 
+// Empreinte du contenu ajoutée à l'adresse de la feuille de style et du script :
+// dès qu'un fichier change, son adresse change et le navigateur le recharge.
+const stamp = (name) => createHash('sha256').update(readFileSync(join(ROOT, 'assets', name))).digest('hex').slice(0, 8);
+const STAMPS = { 'style.css': stamp('style.css'), 'app.js': stamp('app.js') };
+const stamped = (html) => html.replace(/(assets\/(style\.css|app\.js))(\?v=[0-9a-f]+)?"/g, (_, path, name) => `${path}?v=${STAMPS[name]}"`);
+
 let count = 0;
 for (const lang of LANGS) {
   for (const page of PAGES) {
@@ -77,6 +84,7 @@ for (const lang of LANGS) {
       // Les pages traduites pointent vers les fichiers communs de la racine
       html = html.replace(/(src|href|srcset)="assets\//g, '$1="../assets/');
     }
+    html = stamped(html);
     writeFileSync(file, html);
     count++;
   }
