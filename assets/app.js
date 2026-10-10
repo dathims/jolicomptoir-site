@@ -9,6 +9,8 @@
   // dans <script type="application/json" id="i18n">.
   // ---------------------------------------------------------------------------
 
+  const reduceMotionEarly = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const FR = {
     locale: 'fr-FR',
     decimal: ',',
@@ -87,14 +89,28 @@
     });
   }
 
-  // Catalogue du matériel : filtre par famille
+  // Catalogue du matériel : une barre de filtre, les familles se montrent ou se cachent
   const catalogue = document.querySelector('[data-catalogue]');
   if (catalogue) {
-    const chips = [...document.querySelectorAll('[data-famille].chip')];
-    chips.forEach((chip) => chip.addEventListener('click', () => {
-      const famille = chip.dataset.famille;
-      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
-      catalogue.querySelectorAll('.article').forEach((a) => { a.hidden = famille !== 'tout' && a.dataset.famille !== famille; });
+    const boutons = [...document.querySelectorAll('[data-filtre] .filtre-btn')];
+    const familles = [...catalogue.querySelectorAll('.famille')];
+    const barre = document.querySelector('[data-filtre]');
+    const marquer = () => {
+      barre.classList.remove('is-scrollable');
+      const deborde = barre.scrollWidth > barre.clientWidth + 1;
+      barre.classList.toggle('is-scrollable', deborde);
+      barre.classList.toggle('is-end', deborde && barre.scrollLeft + barre.clientWidth >= barre.scrollWidth - 2);
+    };
+    marquer();
+    window.addEventListener('resize', marquer);
+    barre.addEventListener('scroll', () => barre.classList.toggle('is-end', barre.scrollLeft + barre.clientWidth >= barre.scrollWidth - 2));
+    document.fonts?.ready.then(marquer);
+    boutons.forEach((bouton) => bouton.addEventListener('click', () => {
+      const choix = bouton.dataset.famille;
+      boutons.forEach((b) => b.setAttribute('aria-pressed', String(b === bouton)));
+      familles.forEach((f) => { f.hidden = choix !== 'tout' && f.dataset.famille !== choix; });
+      // le bouton choisi reste visible dans la barre quand elle défile sur mobile
+      bouton.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotionEarly ? 'auto' : 'smooth' });
     }));
   }
 
