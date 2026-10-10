@@ -16,18 +16,6 @@
     decimal: ',',
     group: ' ',
     currency: '{amount} €',
-    steps: [
-      "Un bip : la douchette lit l'étiquette, le pull s'ajoute à la vente.",
-      'Deuxième bip : le jean rejoint la vente et le total se met à jour.',
-      "Paiement en espèces : le ticket s'imprime et le tiroir s'ouvre.",
-      'Vente suivante, réglée par carte sur le terminal de votre banque.',
-      "Le ticket s'imprime et le tiroir reste fermé.",
-      "Arrivage : l'imprimante d'étiquettes sort le prix et le code-barres.",
-    ],
-    pause: 'Pause',
-    play: 'Lecture',
-    pauseLabel: "Mettre l'animation en pause",
-    playLabel: "Lancer l'animation",
     products: [
       'Pull col rond mérinos', 'Chemise en lin', 'Robe portefeuille', 'Jean droit brut',
       'Pantalon large en laine', 'Écharpe en laine', 'Chaussettes côtelées', 'Tote bag en toile',
@@ -215,111 +203,24 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Le comptoir animé : un petit scénario qui fait travailler chaque appareil
+  // Le comptoir en six scènes : un bouton par moment, sa photo à côté
   // ---------------------------------------------------------------------------
 
-  const scene = document.querySelector('[data-scene]');
-  if (scene) {
-    // Le tiroir ne s'ouvre que pour les espèces, comme dans la vraie caisse.
-    const STEPS = [
-      { dev: 'scanner', state: ['l1', 'c-scan'], fx: ['beam', 'ring'], dur: 2600,
-        cap: T.steps[0] },
-      { dev: 'scanner', state: ['l1', 'l2', 'c-scan'], fx: ['beam', 'ring'], dur: 2600,
-        cap: T.steps[1] },
-      { dev: 'drawer', state: ['l1', 'l2', 'paid-cash', 'receipt', 'drawer', 'c-print', 'c-drawer'], fx: [], dur: 3600,
-        cap: T.steps[2] },
-      { dev: 'tpe', state: ['l3', 'card'], fx: [], dur: 2600,
-        cap: T.steps[3] },
-      { dev: 'printer', state: ['l3', 'paid-card', 'tpe-ok', 'receipt', 'c-print'], fx: [], dur: 3200,
-        cap: T.steps[4] },
-      { dev: 'labels', state: ['label', 'c-label'], fx: [], dur: 3600,
-        cap: T.steps[5] },
-    ];
-    // Les appareils sans étape propre (l'écran) renvoient à l'étape la plus parlante.
-    const FIRST_STEP = { screen: 1, scanner: 0, drawer: 2, tpe: 3, printer: 4, labels: 5 };
-
-    // Sur petit écran, cadrage resserré sur le comptoir pour garder les appareils lisibles.
-    const narrow = window.matchMedia('(max-width: 560px)');
-    const frame = () => scene.setAttribute('viewBox', narrow.matches ? '40 96 740 322' : '14 40 772 410');
-    frame();
-    narrow.addEventListener('change', frame);
-
-    const caption = document.querySelector('[data-caption]');
-    const toggle = document.querySelector('[data-scene-toggle]');
-    const legend = [...document.querySelectorAll('[data-device]')];
-    let step = 0;
-    let timer = null;
-    let playing = false;
-    let pausedByUser = false;
-    let holding = false;
-
-    function apply(index) {
-      const s = STEPS[index];
-      scene.setAttribute('class', ['scene', ...s.state.map((c) => `s-${c}`)].join(' '));
-      for (const name of s.fx) {
-        const el = scene.querySelector(`.${name}`);
-        el.classList.remove('go');
-        void el.getBoundingClientRect();
-        el.classList.add('go');
-      }
-      caption.textContent = s.cap;
-      legend.forEach((b) => b.classList.toggle('is-active', b.dataset.device === s.dev));
-    }
-
-    function run() {
-      clearTimeout(timer);
-      apply(step);
-      if (!playing || holding) return;
-      timer = setTimeout(() => {
-        step = (step + 1) % STEPS.length;
-        run();
-      }, STEPS[step].dur);
-    }
-
-    function setPlaying(on) {
-      playing = on;
-      toggle.textContent = on ? T.pause : T.play;
-      toggle.setAttribute('aria-label', on ? T.pauseLabel : T.playLabel);
-      if (on) run();
-      else clearTimeout(timer);
-    }
-
-    toggle.addEventListener('click', () => {
-      pausedByUser = playing;
-      setPlaying(!playing);
+  const gestes = document.querySelector('[data-gestes]');
+  if (gestes) {
+    const items = [...gestes.querySelectorAll('.geste')];
+    const choisir = (item) => items.forEach((li) => {
+      const actif = li === item;
+      li.classList.toggle('is-active', actif);
+      li.querySelector('button').setAttribute('aria-pressed', String(actif));
     });
-
-    legend.forEach((button) => {
-      const dev = button.dataset.device;
-      const focusOn = () => { scene.dataset.focus = dev; holding = true; clearTimeout(timer); };
-      const focusOff = () => { delete scene.dataset.focus; holding = false; if (playing) run(); };
-      button.addEventListener('mouseenter', focusOn);
-      button.addEventListener('mouseleave', focusOff);
-      button.addEventListener('focus', focusOn);
-      button.addEventListener('blur', focusOff);
-      button.addEventListener('click', () => {
-        step = FIRST_STEP[dev];
-        holding = false;
-        delete scene.dataset.focus;
-        run();
-        if (playing) return;
-        scene.dataset.focus = dev; // à l'arrêt, l'appareil reste mis en avant
-      });
+    const survol = window.matchMedia('(hover: hover) and (min-width: 961px)');
+    items.forEach((li) => {
+      const bouton = li.querySelector('button');
+      bouton.addEventListener('click', () => choisir(li));
+      // à la souris sur grand écran, survoler suffit pour voir la scène
+      bouton.addEventListener('mouseenter', () => { if (survol.matches) choisir(li); });
     });
-
-    // Lecture quand le comptoir est visible, sauf si la personne a mis en pause
-    // ou préfère réduire les animations (on montre alors la vente en espèces, figée).
-    if (reduceMotion) {
-      step = 2;
-      apply(step);
-      setPlaying(false);
-    } else {
-      apply(step);
-      new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && !pausedByUser) setPlaying(true);
-        else if (!entry.isIntersecting && playing) setPlaying(false);
-      }, { threshold: 0.35 }).observe(scene);
-    }
   }
 
   // ---------------------------------------------------------------------------

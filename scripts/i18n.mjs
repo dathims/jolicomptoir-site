@@ -83,6 +83,8 @@ for (const lang of LANGS) {
     if (lang.dir) {
       // Les pages traduites pointent vers les fichiers communs de la racine
       html = html.replace(/(src|href|srcset)="assets\//g, '$1="../assets/');
+      // srcset liste plusieurs fichiers : chacun doit remonter d'un dossier
+      html = html.replace(/srcset="([^"]*)"/g, (_, list) => `srcset="${list.replace(/(,\s*)assets\//g, '$1../assets/')}"`);
     }
     html = stamped(html);
     writeFileSync(file, html);

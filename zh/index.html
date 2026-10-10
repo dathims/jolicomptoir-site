@@ -26,7 +26,7 @@
   <link rel="preload" href="../assets/fonts/familjen-grotesk.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="../assets/img/hero.webp" media="(min-width: 561px)">
   <link rel="preload" as="image" href="../assets/img/hero-mobile.webp" media="(max-width: 560px)">
-  <link rel="stylesheet" href="../assets/style.css?v=47dfdeb6">
+  <link rel="stylesheet" href="../assets/style.css?v=79480041">
 </head>
 <body>
   <a class="skip" href="#contenu">跳至正文</a>
@@ -284,155 +284,41 @@
       <p class="demo-note">在您浏览器中运行的简化演示。正式收银系统通过小票打印机打印，并在日志中为每笔销售签名。</p>
     </section>
 
-    <!-- Le comptoir équipé : chaque appareil et son rôle, en animation -->
+    <!-- Le comptoir équipé : ce que chaque appareil apporte, en six scènes de boutique -->
     <section class="installation" id="comptoir" aria-labelledby="comptoir-title">
       <div class="section-head">
         <h2 id="comptoir-title">完整收银台，一块屏幕全盘掌控。</h2>
-        <p>扫码枪、打印机、钱箱和刷卡机：每台设备各司其职，一切由收银系统统一调度。选择一台设备，看看它如何工作。</p>
+        <p>收银台上的每台设备都为您省下一个动作，一切从收银系统出发。选择一个场景，看看店里的样子。</p>
       </div>
 
-      <div class="comptoir">
-        <figure class="comptoir-scene">
-          <svg class="scene" viewBox="14 40 772 410" role="img" aria-labelledby="scene-title scene-desc" data-scene>
-            <title id="scene-title">配备 Joli Comptoir 的店铺收银台</title>
-            <desc id="scene-desc">柜台上从左到右依次为：放在底座上的扫码枪（旁边是一件贴有标签的折叠毛衣）、收银屏幕、小票打印机、银行刷卡机和标签打印机。钱箱位于柜台下方，与小票打印机相连。</desc>
-
-            <g class="decor" aria-hidden="true">
-              <rect x="60" y="80" width="680" height="6" rx="3" fill="#dfe2e7"/>
-              <rect x="104" y="58" width="72" height="11" rx="4" fill="#e6dccb"/>
-              <rect x="108" y="69" width="64" height="11" rx="4" fill="#c4c9b2"/>
-              <rect x="196" y="62" width="66" height="18" rx="5" fill="#cdb9a6"/>
-              <rect x="560" y="56" width="70" height="12" rx="4" fill="#9aa6c4"/>
-              <rect x="564" y="68" width="62" height="12" rx="4" fill="#2f3b5e" opacity=".55"/>
-              <rect x="650" y="62" width="64" height="18" rx="5" fill="#d6a28c" opacity=".8"/>
-            </g>
-
-            <g class="counter" aria-hidden="true">
-              <rect x="20" y="316" width="760" height="16" rx="4" fill="#e3cba6"/>
-              <rect x="20" y="330" width="760" height="10" fill="#c49e70"/>
-              <rect x="44" y="340" width="712" height="140" fill="#d8b98d"/>
-              <path d="M164 340V480M284 340V480M404 340V480M524 340V480M644 340V480" stroke="#caa77a" stroke-width="2"/>
-            </g>
-
-            <g class="cables" aria-hidden="true">
-              <path class="cable c-scan" d="M98 312C150 338 330 338 395 314"/>
-              <path class="cable c-print" d="M405 314C452 334 528 334 566 318"/>
-              <path class="cable c-label" d="M405 314C520 342 700 342 740 318"/>
-              <path class="cable c-drawer" d="M604 318C614 330 614 338 606 350"/>
-            </g>
-
-            <g class="dev dev-drawer">
-              <g class="drawer-tray">
-                <rect x="478" y="346" width="164" height="32" rx="3" fill="#3a3d44"/>
-                <rect x="486" y="351" width="32" height="20" rx="2" fill="#9fc6a8"/>
-                <rect x="524" y="351" width="32" height="20" rx="2" fill="#e8b8a0"/>
-                <rect x="562" y="351" width="32" height="20" rx="2" fill="#a9b8e6"/>
-                <circle cx="612" cy="360" r="5" fill="#d9b45a"/><circle cx="626" cy="364" r="5" fill="#c9ccd2"/>
-              </g>
-              <g class="drawer-front">
-                <rect x="470" y="344" width="180" height="40" rx="5" fill="#2a2d33"/>
-                <rect x="540" y="359" width="40" height="5" rx="2.5" fill="#55595f"/>
-                <circle cx="630" cy="364" r="3" fill="#8a8f97"/>
-              </g>
-            </g>
-
-            <g class="article" aria-hidden="true">
-              <rect x="150" y="286" width="112" height="32" rx="9" fill="#e6dccb"/>
-              <rect x="156" y="276" width="100" height="16" rx="7" fill="#efe7da"/>
-              <path d="M162 299h88M162 307h88" stroke="#d6cab5" stroke-width="2" stroke-linecap="round"/>
-              <path d="M219 279l-6 8" stroke="#8a8f97"/>
-              <rect x="198" y="286" width="26" height="18" rx="2" fill="#fff" stroke="#c9ccd2"/>
-              <path d="M202 290v10M204 290v10M207 290v10M209 290v10M212 290v10M215 290v10M217 290v10M220 290v10" stroke="#15171a"/>
-            </g>
-
-            <g class="dev dev-scanner">
-              <rect x="56" y="300" width="56" height="18" rx="7" fill="#2a2d33"/>
-              <g transform="rotate(10 90 270)">
-                <rect x="74" y="262" width="20" height="46" rx="8" fill="#1f2226"/>
-                <rect x="64" y="246" width="66" height="28" rx="12" fill="#1f2226"/>
-                <rect x="124" y="252" width="7" height="16" rx="3" fill="#2a36b8"/>
-              </g>
-              <path class="beam" d="M132 266L198 285V303Z" fill="#e5484d"/>
-              <circle class="ring" cx="132" cy="266" r="14" fill="none" stroke="#2a36b8" stroke-width="2"/>
-            </g>
-
-            <g class="dev dev-screen">
-              <rect x="384" y="266" width="22" height="44" fill="#2a2d33"/>
-              <rect x="350" y="306" width="90" height="12" rx="6" fill="#2a2d33"/>
-              <rect x="286" y="102" width="218" height="168" rx="14" fill="#15171a"/>
-              <rect x="296" y="112" width="198" height="148" rx="6" fill="#fff"/>
-              <rect x="296" y="112" width="198" height="22" rx="6" fill="#eef0f3"/>
-              <rect x="296" y="124" width="198" height="10" fill="#eef0f3"/>
-              <text class="ui ui-head" x="306" y="127">当前销售</text>
-              <g class="l1"><text class="ui" x="306" y="156">美利奴圆领毛衣</text><text class="ui ui-num" x="484" y="156" text-anchor="end">89.00</text></g>
-              <g class="l2"><text class="ui" x="306" y="176">原色直筒牛仔裤</text><text class="ui ui-num" x="484" y="176" text-anchor="end">119.00</text></g>
-              <g class="l3"><text class="ui" x="306" y="156">羊毛围巾</text><text class="ui ui-num" x="484" y="156" text-anchor="end">45.00</text></g>
-              <path d="M306 226H484" stroke="#d9dce2"/>
-              <text class="ui" x="306" y="247">总计</text>
-              <text class="ui ui-total tot tot0" x="484" y="249" text-anchor="end">€0.00</text>
-              <text class="ui ui-total tot tot1" x="484" y="249" text-anchor="end">€89.00</text>
-              <text class="ui ui-total tot tot2" x="484" y="249" text-anchor="end">€208.00</text>
-              <text class="ui ui-total tot tot3" x="484" y="249" text-anchor="end">€45.00</text>
-              <g class="badge badge-cash"><rect x="322" y="186" width="146" height="30" rx="10" fill="#2a36b8"/><text class="ui ui-badge" x="395" y="205" text-anchor="middle">现金已付</text></g>
-              <g class="badge badge-card"><rect x="322" y="186" width="146" height="30" rx="10" fill="#2a36b8"/><text class="ui ui-badge" x="395" y="205" text-anchor="middle">刷卡已付</text></g>
-            </g>
-
-            <g class="dev dev-printer">
-              <g class="receipt">
-                <rect x="540" y="190" width="52" height="76" fill="#fff" stroke="#d9dce2"/>
-                <path d="M548 202h36M548 211h26M548 220h36M548 234h20M574 234h10M548 248h36" stroke="#b9bec7" stroke-width="2"/>
-              </g>
-              <rect x="520" y="264" width="94" height="54" rx="9" fill="#24272c"/>
-              <rect x="520" y="258" width="94" height="16" rx="7" fill="#34373e"/>
-              <rect x="534" y="263" width="66" height="4" rx="2" fill="#0c0d0f"/>
-              <circle cx="602" cy="304" r="2.5" fill="#7c89ff"/>
-            </g>
-
-            <g class="dev dev-tpe">
-              <rect x="644" y="232" width="46" height="86" rx="11" fill="#1f2226"/>
-              <rect x="651" y="241" width="32" height="24" rx="3" fill="#e3e6fa"/>
-              <path class="tpe-ok" d="M660 253l5 5 9-9" fill="none" stroke="#2a36b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <g fill="#5a5f68">
-                <circle cx="657" cy="277" r="2.6"/><circle cx="667" cy="277" r="2.6"/><circle cx="677" cy="277" r="2.6"/>
-                <circle cx="657" cy="287" r="2.6"/><circle cx="667" cy="287" r="2.6"/><circle cx="677" cy="287" r="2.6"/>
-                <circle cx="657" cy="297" r="2.6"/><circle cx="667" cy="297" r="2.6"/><circle cx="677" cy="297" r="2.6"/>
-                <circle cx="657" cy="307" r="2.6"/><circle cx="667" cy="307" r="2.6"/><circle cx="677" cy="307" r="2.6"/>
-              </g>
-              <g class="card">
-                <rect x="640" y="190" width="52" height="33" rx="5" fill="#2a36b8"/>
-                <rect x="647" y="199" width="10" height="8" rx="2" fill="#f3c969"/>
-              </g>
-            </g>
-
-            <g class="dev dev-labels">
-              <rect x="702" y="254" width="76" height="64" rx="12" fill="#2f3238"/>
-              <path d="M702 276h76" stroke="#41454c" stroke-width="2"/>
-              <rect x="708" y="298" width="64" height="4" rx="2" fill="#0c0d0f"/>
-              <g class="label-out">
-                <rect x="712" y="300" width="56" height="30" rx="2" fill="#fff" stroke="#c9ccd2"/>
-                <text class="ui ui-tiny" x="716" y="311">美利奴毛衣</text>
-                <text class="ui ui-tiny ui-strong" x="716" y="325">€89.00</text>
-                <path d="M748 316v10M750 316v10M753 316v10M755 316v10M758 316v10M761 316v10M763 316v10" stroke="#15171a"/>
-              </g>
-            </g>
-          </svg>
-          <figcaption class="scene-bar">
-            <p class="scene-caption" data-caption>嘀一声：扫码枪读取标签，毛衣加入本笔销售。</p>
-            <button type="button" class="btn btn-line btn-small" data-scene-toggle>暂停</button>
-          </figcaption>
-        </figure>
-
-        <div class="appareils-col">
-        <ul class="appareils" aria-label="收银台设备">
-          <li><button type="button" data-device="screen"><strong>收银屏幕</strong><span>Mac、PC 或平板电脑均可。商品目录、购物车和日结都在这里管理，所有数据留在店内。</span></button></li>
-          <li><button type="button" data-device="scanner"><strong>扫码枪</strong><span>每件商品嘀一声，价格直接取自商品目录。任何 USB 扫码枪均可使用。</span></button></li>
-          <li><button type="button" data-device="drawer"><strong>钱箱</strong><span>连接小票打印机，每次现金支付时自动弹开。</span></button></li>
-          <li><button type="button" data-device="tpe"><strong>刷卡机</strong><span>使用您银行提供的刷卡机，放在一旁即可。收银系统记录每笔刷卡支付。</span></button></li>
-          <li><button type="button" data-device="printer"><strong>小票打印机</strong><span>Epson TM-m30III 或任何 ESC/POS 打印机，接入店铺网络即可。</span></button></li>
-          <li><button type="button" data-device="labels"><strong>标签打印机</strong><span>Zebra ZD421d 或办公室打印机：按您的标签规格打印价格和条形码。</span></button></li>
+      <div class="gestes" data-gestes>
+        <ul class="gestes-liste" aria-label="收银台上的场景">
+          <li class="geste is-active">
+            <button type="button" aria-pressed="true"><strong>一块屏幕，管好一切</strong><span>商品目录、购物车和结账都在同一处，数据留在店内。</span></button>
+            <img class="geste-photo" src="../assets/img/gestes/ecran.webp" srcset="../assets/img/gestes/ecran-900.webp 900w, ../assets/img/gestes/ecran.webp 1600w" sizes="(max-width: 960px) 100vw, 56vw" alt="店主一边点触收银屏幕，一边对顾客微笑。" width="1600" height="1195" loading="lazy">
+          </li>
+          <li class="geste">
+            <button type="button" aria-pressed="false"><strong>嘀一声，商品已入账</strong><span>扫码枪读取标签，价格来自商品目录。</span></button>
+            <img class="geste-photo" src="../assets/img/gestes/douchette.webp" srcset="../assets/img/gestes/douchette-900.webp 900w, ../assets/img/gestes/douchette.webp 1600w" sizes="(max-width: 960px) 100vw, 56vw" alt="一只手正在扫描毛衣的标签，顾客拎着购物袋在一旁等候。" width="1600" height="1195" loading="lazy">
+          </li>
+          <li class="geste">
+            <button type="button" aria-pressed="false"><strong>刷卡完成，销售已记录</strong><span>使用您银行的刷卡机，就放在收银台旁。</span></button>
+            <img class="geste-photo" src="../assets/img/gestes/carte.webp" srcset="../assets/img/gestes/carte-900.webp 900w, ../assets/img/gestes/carte.webp 1600w" sizes="(max-width: 960px) 100vw, 56vw" alt="顾客把银行卡靠近店主递来的刷卡机。" width="1600" height="1195" loading="lazy">
+          </li>
+          <li class="geste">
+            <button type="button" aria-pressed="false"><strong>找零一次就准</strong><span>每笔现金付款时钱箱自动打开，系统算好找零。</span></button>
+            <img class="geste-photo" src="../assets/img/gestes/especes.webp" srcset="../assets/img/gestes/especes-900.webp 900w, ../assets/img/gestes/especes.webp 1600w" sizes="(max-width: 960px) 100vw, 56vw" alt="店主把零钱递给顾客，柜台下的钱箱开着。" width="1600" height="1195" loading="lazy">
+          </li>
+          <li class="geste">
+            <button type="button" aria-pressed="false"><strong>小票随购物袋一起带走</strong><span>收款后立即打印，放进顾客的购物袋。</span></button>
+            <img class="geste-photo" src="../assets/img/gestes/ticket.webp" srcset="../assets/img/gestes/ticket-900.webp 900w, ../assets/img/gestes/ticket.webp 1600w" sizes="(max-width: 960px) 100vw, 56vw" alt="店主把小票放进顾客正要拿走的纸袋。" width="1600" height="1195" loading="lazy">
+          </li>
+          <li class="geste">
+            <button type="button" aria-pressed="false"><strong>每件商品都有价签</strong><span>价格和条形码在店内打印，符合您的标签格式。</span></button>
+            <img class="geste-photo" src="../assets/img/gestes/etiquettes.webp" srcset="../assets/img/gestes/etiquettes-900.webp 900w, ../assets/img/gestes/etiquettes.webp 1600w" sizes="(max-width: 960px) 100vw, 56vw" alt="一双手正把带条形码的标签系在亚麻衬衫上，旁边是标签打印机。" width="1600" height="1195" loading="lazy">
+          </li>
+          <li class="geste-lien"><a class="lien-materiel" href="materiel.html">查看全部设备</a></li>
         </ul>
-        <a class="lien-materiel" href="materiel.html">查看全部设备</a>
-        </div>
       </div>
     </section>
 
@@ -501,18 +387,6 @@
   "locale": "zh-CN",
   "decimal": ".",
   "group": ",",
-  "steps": [
-    "嘀一声：扫码枪读取标签，毛衣加入本笔销售。",
-    "再嘀一声：牛仔裤加入销售，总计随即更新。",
-    "现金支付：小票打印，钱箱弹开。",
-    "下一笔销售，在您银行的刷卡机上完成支付。",
-    "小票打印，钱箱保持关闭。",
-    "新货到店：标签打印机打出价格和条形码。"
-  ],
-  "pause": "暂停",
-  "play": "播放",
-  "pauseLabel": "暂停动画",
-  "playLabel": "播放动画",
   "products": [
     "美利奴圆领毛衣",
     "亚麻衬衫",
@@ -542,6 +416,6 @@
   "result": "{s} 秒完成收款。顾客满意离店，库存已同步更新。",
   "currency": "€{amount}"
 }</script>
-  <script src="../assets/app.js?v=8b60bac1" defer></script>
+  <script src="../assets/app.js?v=55de5861" defer></script>
 </body>
 </html>

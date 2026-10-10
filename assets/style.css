@@ -136,7 +136,7 @@ button { font: inherit; color: inherit; }
 .langues-menu a[aria-current="true"] { background: var(--atelier-soft); color: var(--atelier); font-weight: 600; }
 
 /* Chinois : polices du système pour les idéogrammes */
-:lang(zh) body, :lang(zh) .scene .ui { font-family: "Familjen Grotesk", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+:lang(zh) body { font-family: "Familjen Grotesk", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
 :lang(zh) h1, :lang(zh) h2, :lang(zh) h3 { letter-spacing: 0; }
 
 .site-nav {
@@ -499,86 +499,46 @@ section.journee { padding-top: 0; }
 
 .demo-note { margin-top: 1.2rem; font-size: .9375rem; color: var(--muted); max-width: 70ch; }
 
-/* Le comptoir animé ------------------------------------------------- */
+/* Le comptoir en six scènes ----------------------------------------- */
 
-.comptoir {
+/* Grand écran : la photo de la scène choisie à gauche, les six moments à droite.
+   Chaque <li> porte son bouton et sa photo ; display: contents les pose sur la grille. */
+.gestes-liste {
+  list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
+  column-gap: clamp(1.5rem, 4vw, 3.5rem); row-gap: .5rem; align-items: start;
 }
-.comptoir-scene { margin: 0; background: var(--brume); border-radius: 28px; padding: 1.2rem 1.2rem 1rem; }
-.scene { display: block; width: 100%; height: auto; }
-.scene .ui { font-family: var(--font); font-size: 10px; fill: #15171a; }
-.scene .ui-head { font-weight: 600; font-size: 9.5px; fill: #4b5059; }
-.scene .ui-num { font-variant-numeric: tabular-nums; }
-.scene .ui-total { font-size: 16px; font-weight: 600; }
-.scene .ui-badge { font-size: 11px; font-weight: 600; fill: #fff; }
-.scene .ui-tiny { font-size: 6.5px; }
-.scene .ui-strong { font-size: 8px; font-weight: 700; }
-
-/* Câbles : les données circulent quand l'appareil travaille */
-.cable { fill: none; stroke: #b7bcc5; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 2 7; transition: stroke .3s; }
-.s-c-scan .c-scan, .s-c-print .c-print, .s-c-label .c-label, .s-c-drawer .c-drawer { stroke: var(--atelier); animation: flux .7s linear infinite; }
-@keyframes flux { to { stroke-dashoffset: -18; } }
-
-/* États de l'écran */
-.scene .l1, .scene .l2, .scene .l3, .scene .tot, .scene .badge, .scene .tpe-ok { opacity: 0; transition: opacity .35s; }
-.s-l1 .l1, .s-l2 .l2, .s-l3 .l3 { opacity: 1; }
-.scene .tot0 { opacity: 1; }
-.s-l1 .tot0, .s-l3 .tot0 { opacity: 0; }
-.s-l1:not(.s-l2) .tot1, .s-l2 .tot2, .s-l3 .tot3 { opacity: 1; }
-.scene .badge { transform-box: fill-box; transform-origin: center; transform: scale(.9); transition: opacity .35s, transform .35s; }
-.s-paid-cash .badge-cash, .s-paid-card .badge-card { opacity: 1; transform: none; }
-.s-tpe-ok .tpe-ok { opacity: 1; }
-
-/* Ticket, tiroir, carte, étiquette */
-.scene .receipt { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform .3s ease-in; }
-.s-receipt .receipt { transform: scaleY(1); transition: transform 1.3s steps(12, end); }
-.scene .drawer-front { transition: transform .5s cubic-bezier(.3, .7, .2, 1); }
-.s-drawer .drawer-front { transform: translateY(34px); }
-.scene .card { opacity: 0; transform: translateY(-34px); transition: opacity .4s, transform .6s cubic-bezier(.3, .7, .2, 1); }
-.s-card .card, .s-tpe-ok .card { opacity: 1; transform: none; }
-.scene .label-out { transform-box: fill-box; transform-origin: 50% 0; transform: scaleY(0); transition: transform .3s ease-in; }
-.s-label .label-out { transform: scaleY(1); transition: transform 1.2s steps(10, end); }
-
-/* Effets ponctuels : faisceau et bip */
-.scene .beam { opacity: 0; }
-.scene .beam.go { animation: faisceau .8s ease-out; }
-@keyframes faisceau { 0% { opacity: 0; } 25% { opacity: .8; } 100% { opacity: 0; } }
-.scene .ring { opacity: 0; transform-box: fill-box; transform-origin: center; }
-.scene .ring.go { animation: bip .8s ease-out; }
-@keyframes bip { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(2.2); } }
-
-/* Un appareil choisi dans la légende passe au premier plan */
-.scene .dev, .scene .article, .scene .cables { transition: opacity .3s; }
-.scene[data-focus] .dev, .scene[data-focus] .article, .scene[data-focus] .cables { opacity: .22; }
-.scene[data-focus="screen"] .dev-screen,
-.scene[data-focus="scanner"] .dev-scanner, .scene[data-focus="scanner"] .article,
-.scene[data-focus="drawer"] .dev-drawer,
-.scene[data-focus="tpe"] .dev-tpe,
-.scene[data-focus="printer"] .dev-printer,
-.scene[data-focus="labels"] .dev-labels { opacity: 1; }
-
-.scene-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .6rem; }
-.scene-caption { font-weight: 500; min-height: 3em; display: flex; align-items: center; }
-
-.appareils { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
-.appareils button {
+.geste, .geste-lien { display: contents; }
+.geste button {
+  grid-column: 2;
   display: grid; gap: .2rem; width: 100%; text-align: left;
   padding: .9rem 1.1rem; border-radius: 16px; border: 1.5px solid transparent;
   background: transparent; cursor: pointer; transition: background-color .2s, border-color .2s;
 }
-.appareils button:hover { background: var(--brume); }
-.appareils button.is-active { border-color: var(--atelier); background: var(--atelier-soft); }
-.appareils strong { font-size: 1.0625rem; font-weight: 600; }
-.appareils span { color: var(--muted); font-size: .9375rem; line-height: 1.45; }
-
-@media (max-width: 960px) {
-  .comptoir { grid-template-columns: 1fr; }
+.geste button:hover { background: var(--brume); }
+.geste.is-active button { border-color: var(--atelier); background: var(--atelier-soft); }
+.geste strong { font-size: 1.0625rem; font-weight: 600; }
+.geste span { color: var(--muted); font-size: .9375rem; line-height: 1.45; }
+.geste-photo {
+  grid-column: 1; grid-row: 1 / span 7; align-self: start;
+  width: 100%; height: auto; aspect-ratio: 1600 / 1195; object-fit: cover;
+  border-radius: 28px; background: var(--brume);
+  opacity: 0; visibility: hidden; transition: opacity .45s ease, visibility 0s .45s;
 }
-@media (max-width: 560px) {
-  .comptoir-scene { padding: .5rem .5rem .9rem; border-radius: 20px; }
-  .scene-bar { padding: 0 .5rem; }
-  .scene-caption { font-size: .9375rem; }
+.geste.is-active .geste-photo { opacity: 1; visibility: visible; transition: opacity .45s ease; }
+.geste-lien .lien-materiel { grid-column: 2; justify-self: start; margin-left: 1.1rem; }
+
+/* Petit écran : la photo s'ouvre sous le moment choisi */
+@media (max-width: 960px) {
+  .gestes-liste { grid-template-columns: minmax(0, 1fr); }
+  .geste { display: grid; gap: .6rem; }
+  .geste-lien { display: block; }
+  .geste button, .geste-photo, .geste-lien .lien-materiel { grid-column: 1; }
+  .geste-photo { grid-row: auto; border-radius: 20px; }
+  .geste:not(.is-active) .geste-photo { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .geste-photo, .geste.is-active .geste-photo { transition: none; }
 }
 
 /* Outils ------------------------------------------------------------- */
@@ -806,7 +766,6 @@ section.famille { padding: 0; }
 .pack-visuel { display: grid; gap: 1rem; }
 .pack-visuel img { display: block; width: 100%; height: auto; border-radius: 18px; }
 .legal-header a:not(.brand) { white-space: nowrap; }
-.appareils-col { display: grid; align-content: start; }
 .pack .pack-visuel { justify-items: stretch; }
 
 /* Quand la barre de filtre déborde, un fondu à droite signale qu'elle défile */
