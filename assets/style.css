@@ -713,3 +713,57 @@ section:not(.hero) { padding: clamp(4.5rem, 10vw, 8.5rem) var(--gutter); }
   margin-top: 1.4rem; padding: .9rem 1.1rem; border-radius: 14px;
   background: var(--atelier-soft); color: var(--atelier); font-weight: 500;
 }
+
+/* Catalogue du matériel ------------------------------------------------ */
+
+.catalogue { padding: clamp(3rem, 7vw, 5.5rem) var(--gutter) clamp(4rem, 8vw, 6rem); background: var(--brume); }
+.catalogue h1 {
+  font-size: clamp(2.2rem, 4.8vw, 3.8rem); line-height: 1.02; font-weight: 600; letter-spacing: -.035em;
+  max-width: 20ch; text-wrap: balance;
+}
+.catalogue-filtres { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.8rem; }
+.catalogue-grille {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 1rem;
+}
+.article { display: grid; align-content: start; gap: .35rem; padding: 1rem 1rem 1.2rem; background: var(--white); border-radius: 22px; }
+.article[hidden] { display: none; }
+.article-photo { position: relative; margin-bottom: .5rem; }
+.article-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
+.article-famille { font-size: .875rem; color: var(--muted); }
+.article h3 { font-size: 1.125rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.article p:last-child { font-size: .9375rem; line-height: 1.45; color: #24272c; }
+.tag {
+  position: absolute; left: 0; top: 0;
+  padding: .25rem .7rem; border-radius: 999px; font-size: .8125rem; font-weight: 600;
+}
+.tag-reco { background: var(--atelier); color: var(--white); }
+.tag-soon { background: var(--atelier-soft); color: var(--atelier); }
+.catalogue-note { margin-top: 1.4rem; font-size: .9375rem; color: var(--muted); max-width: 80ch; }
+
+.pack {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center;
+  margin-top: clamp(2.5rem, 6vw, 4.5rem); padding: clamp(1.6rem, 4vw, 3rem); border-radius: 28px;
+  background: var(--atelier); color: var(--white);
+}
+section.pack { padding: clamp(1.6rem, 4vw, 3rem); }
+.pack > div { display: grid; gap: 1.1rem; justify-items: start; }
+.pack h2 { font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.05; font-weight: 600; letter-spacing: -.03em; }
+.pack p { color: rgba(255, 255, 255, .88); max-width: 46ch; }
+.pack .btn-ink { background: var(--white); color: var(--ink); border-color: var(--white); }
+.pack .btn-ink:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.pack ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.pack li { padding: .7rem 0; border-top: 1px solid rgba(255, 255, 255, .35); font-weight: 500; }
+.pack :focus-visible { outline-color: var(--white); }
+.lien-materiel { display: inline-flex; margin-top: 1.2rem; font-weight: 600; text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
+.lien-materiel:hover { color: var(--atelier); }
+
+@media (max-width: 760px) {
+  .pack { grid-template-columns: 1fr; }
+}
+
+.pack-visuel { display: grid; gap: 1rem; }
+.pack-visuel img { display: block; width: 100%; height: auto; border-radius: 18px; }
+.legal-header a:not(.brand) { white-space: nowrap; }
+.appareils-col { display: grid; align-content: start; }
+.pack .pack-visuel { justify-items: stretch; }

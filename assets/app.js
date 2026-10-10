@@ -87,6 +87,17 @@
     });
   }
 
+  // Catalogue du matériel : filtre par famille
+  const catalogue = document.querySelector('[data-catalogue]');
+  if (catalogue) {
+    const chips = [...document.querySelectorAll('[data-famille].chip')];
+    chips.forEach((chip) => chip.addEventListener('click', () => {
+      const famille = chip.dataset.famille;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      catalogue.querySelectorAll('.article').forEach((a) => { a.hidden = famille !== 'tout' && a.dataset.famille !== famille; });
+    }));
+  }
+
   const tabs = [...document.querySelectorAll('.horloge [role="tab"]')];
 
   function selectTab(tab, focus = false) {

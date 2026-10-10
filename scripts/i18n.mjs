@@ -23,7 +23,7 @@ export const LANGS = [
   { code: 'zh', dir: 'zh', hreflang: 'zh-Hans', name: '中文', flag: 'cn', label: '语言' },
 ];
 
-const PAGES = ['index.html', 'mentions-legales.html', 'confidentialite.html', 'cgv.html'];
+const PAGES = ['index.html', 'materiel.html', 'mentions-legales.html', 'confidentialite.html', 'cgv.html'];
 
 const url = (lang, page) => `${SITE}/${lang.dir ? `${lang.dir}/` : ''}${page === 'index.html' ? '' : page}`;
 const rel = (from, to, page) => {

@@ -56,6 +56,9 @@ compte GitHub. La redirection d'e-mails Namecheap (MX et SPF) est conservée.
 
 ## Pages légales
 
+`materiel.html` est le catalogue du matériel proposé, sans prix (photos dans
+`assets/img/materiel/`, issues des fabricants ou de revendeurs européens).
+
 `mentions-legales.html`, `confidentialite.html` et `cgv.html` (conditions
 générales de vente et de licence du logiciel). Éditeur : OXYGENE NUMERIQUE
 (Oxynum). Le site ne dépose aucun cookie et n'appelle aucun service tiers : les
