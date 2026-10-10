@@ -685,6 +685,10 @@ section.journee { padding-top: 0; }
   .site-nav { display: none; }
 
   .hero { height: auto; }
+  /* La photo ne couvre que la fenêtre de la vitrine : elle reste nette au lieu
+     d'être étirée sur toute la hauteur de la section. */
+  .hero-photo { bottom: auto; height: calc(76px + var(--frame) + 52svh); }
+  .hero-photo img { object-position: 50% 30%; }
   .vitrine { position: relative; inset: auto; margin: 76px 1rem 1rem; padding-top: 52svh; }
   .vitrine-panel { position: relative; width: 100%; padding: 1.8rem 1.4rem 1.4rem; }
   .vitrine-panel::after { display: none; }
