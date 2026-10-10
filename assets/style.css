@@ -262,27 +262,39 @@ button { font: inherit; color: inherit; }
 
 section:not(.hero) { padding: clamp(4.5rem, 10vw, 8.5rem) var(--gutter); }
 
-.section-head { display: grid; gap: 1rem; margin-bottom: clamp(2.2rem, 5vw, 3.5rem); }
+/* En-tête de section : le titre à gauche, le texte d'appui à droite.
+   Un seul style de titre pour toute la page. */
+.section-head,
+.constat { display: grid; gap: 1.2rem clamp(2rem, 7vw, 7rem); }
+.section-head { margin-bottom: clamp(2.2rem, 5vw, 3.5rem); }
 .section-head h2,
+.constat h2,
 .chez-vous h2 {
   font-size: clamp(2rem, 4.4vw, 3.6rem);
   line-height: 1.02; font-weight: 600; letter-spacing: -.03em;
   max-width: 18ch; text-wrap: balance;
 }
-.section-head p { color: var(--muted); font-size: 1.1875rem; max-width: 52ch; }
-
-/* Le constat */
-.constat { display: grid; gap: 1.8rem; }
-.constat h2 {
-  font-size: clamp(1.9rem, 4vw, 3.3rem);
-  line-height: 1.08; font-weight: 500; letter-spacing: -.025em;
-  max-width: 24ch; text-wrap: balance;
+.section-head p,
+.constat p { color: var(--muted); font-size: 1.1875rem; max-width: 52ch; }
+@media (min-width: 900px) {
+  .section-head:has(> p),
+  .constat { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+  .section-head:has(> p) { align-items: end; }
+  .constat { align-items: start; }
+  .constat-suite { padding-top: .5rem; }
 }
-.constat p { font-size: 1.25rem; line-height: 1.55; color: var(--muted); max-width: 58ch; }
+
+/* Le constat : les quatre résultats, une ligne chacun */
+.constat-suite { display: grid; gap: 1.6rem; }
+.resultats { list-style: none; margin: 0; padding: 0; border-bottom: 1.5px solid var(--line); }
+.resultats li {
+  padding: .95rem 0; border-top: 1.5px solid var(--line);
+  font-size: 1.25rem; font-weight: 500; letter-spacing: -.01em; line-height: 1.3;
+}
 
 /* Une journée -------------------------------------------------------- */
 
-.journee { padding-top: 0; }
+section.journee { padding-top: 0; }
 
 .horloge {
   display: flex; gap: 0;
